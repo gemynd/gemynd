@@ -12,8 +12,22 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 
-__author__ = 'devs@gemynd.ai'
-__version__ = '0.1alpha'
+import json
+import logging
 
-from message import Message
-from config import Config
+logger = logging.getLogger(__name__)
+
+class Config:
+
+    def __init__(self, filename):
+        self.map = {}
+        try:
+            f = open(filename, 'rb')
+            self.map = json.load(f)
+        except Exception, ex:
+            logger.error('Cannot load configuration')
+            logger.error(str(ex))
+
+
+    def __getitem__(self, key):
+        return self.map[key]

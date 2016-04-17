@@ -12,8 +12,9 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 
-__author__ = 'devs@gemynd.ai'
-__version__ = '0.1alpha'
+from gemynd.api import Telegram
+from gemynd.core import Config
 
-from message import Message
-from config import Config
+config = Config('config.json')
+telapi = Telegram(config['api']['telegram']['token'])
+telapi.answerAll('hello there!')

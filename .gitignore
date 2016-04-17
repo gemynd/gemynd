@@ -4,5 +4,5 @@ __pycache__/
 *$py.class
 .DS_Store
 
-# Example file
-example.py
+# Files to exclude
+config.json
