@@ -18,3 +18,5 @@ import sys
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 __author__ = 'devs@gemynd.ai'
 __version__ = '0.1alpha'
+
+from config import Config

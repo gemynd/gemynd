@@ -16,4 +16,3 @@ __author__ = 'devs@gemynd.ai'
 __version__ = '0.1alpha'
 
 from message import Message
-from config import Config

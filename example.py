@@ -13,7 +13,7 @@
 # specific language governing permissions and limitations under the License.
 
 from gemynd.api import Telegram
-from gemynd.core import Config
+from gemynd import Config
 
 config = Config('config.json')
 telapi = Telegram(config['api']['telegram']['token'])
