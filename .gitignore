@@ -1,0 +1,8 @@
+# Python compiled modules
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+
+# Example file
+example.py
