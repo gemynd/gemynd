@@ -14,6 +14,7 @@
 
 import telegram
 import logging
+from gemynd import Config
 from gemynd.core import Message
 
 logger = logging.getLogger(__name__)
@@ -21,9 +22,9 @@ logger = logging.getLogger(__name__)
 class Telegram:
 
 
-    def __init__(self, token):
+    def __init__(self, config):
         try:
-            self.bot = telegram.Bot(token=token)
+            self.bot = telegram.Bot(token = config['api']['telegram']['token'])
         except Exception, ex:
             logger.error('Exception occured initializing the bot')
             logger.error('%s' % str(ex))
