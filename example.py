@@ -16,5 +16,5 @@ from gemynd.api import Telegram
 from gemynd import Config
 
 config = Config('config.json')
-telapi = Telegram(config['api']['telegram']['token'])
+telapi = Telegram(config)
 telapi.answerAll('hello there!')
