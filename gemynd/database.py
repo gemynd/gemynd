@@ -15,6 +15,7 @@
 import pg8000
 import logging
 from gemynd import Config
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -23,10 +24,13 @@ class Database:
     def __init__(self, config):
         self.connected = False
         self.db = config['db']
+        if (config['verbose'] == 'on'):
+            logger.setLevel(logging.DEBUG)
 
 
     def connect(self):
         try:
+            logger.debug("Connecting to the database '%s' user '%s'" % (self.db['database'], self.db['username']))
             self.connection = pg8000.connect(
                     host = self.db['host'],
                     port = int(self.db['port']),
@@ -39,5 +43,34 @@ class Database:
             logger.error('%s' % str(ex))
 
 
+    def execute(self, query, isdatareturned):
+        res = None
+        if not self.connected:
+            logger.error('You should connect to the database prior to executing the query')
+        else:
+            try:
+                logger.debug('Executing query "%s"' % re.sub('\s+', ' ', query.strip()))
+                cursor = self.connection.cursor()
+                cursor.execute(query)
+                if isdatareturned:
+                    res = cursor.fetchall()
+                cursor.close()
+                self.connection.commit()
+            except Exception, ex:
+                logger.error('Error happened while executing the query "%s"' % query)
+                logger.error('%s' % str(ex))
+        return res
+
+
+    def fetch(self, query):
+        return self.execute(query, True)
+
+
+    def call(self, query):
+        return self.execute(query, False)
+
+
     def close(self):
+        logger.debug("Closing database connection to '%s' user '%s'" % (self.db['database'], self.db['username']))
         self.connection.close()
+        self.connected = False

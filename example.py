@@ -17,4 +17,9 @@ from gemynd import Config
 
 config = Config('config.json')
 telapi = Telegram(config)
-telapi.answerAll('hello there!')
+messages, id = telapi.getNewMessages()
+for msg in messages:
+    msg.text = "Message in chat_id %d : '%s'" % (msg.chat_id, msg.text)
+    telapi.sendMessage(msg)
+telapi.commitNewMessages(id)
+telapi.close()

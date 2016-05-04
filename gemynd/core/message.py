@@ -12,19 +12,31 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 
+from functools import total_ordering
+
+@total_ordering
 class Message:
 
-    def __init__(self, id, user_id, user_name, chat_id, text):
+    def __init__(self, id, chat_id, text):
         self.id = id
-        self.user_id = user_id
-        self.user_name = user_name
         self.chat_id = chat_id
         self.text = text
 
+
     def __str__(self):
         result = {'id': self.id,
-                  'user_id': self.user_id,
-                  'user_name': self.user_name,
                   'chat_id': self.chat_id,
                   'text': self.text}
         return str(result)
+
+
+    def __hash__(self):
+        return hash(self.id)
+
+
+    def __eq__(self, other):
+        return (self.id == other.id)
+
+
+    def __lt__(self, other):
+        return (self.id < other.id)
